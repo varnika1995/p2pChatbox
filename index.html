@@ -1,0 +1,146 @@
+<html>
+
+<head>
+    <title>Socket.IO chat</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font: 13px Helvetica, Arial;
+        }
+
+        form {
+            background: #000;
+            padding: 3px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        form input {
+            border: 0;
+            padding: 10px;
+            width: 90%;
+            margin-right: .5%;
+        }
+
+        form button {
+            width: 9%;
+            background: rgb(130, 224, 255);
+            border: none;
+            padding: 10px;
+        }
+
+        #messages {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        #messages li {
+            padding: 5px 10px;
+        }
+
+        #messages li:nth-child(odd) {
+            background: #eee;
+        }
+    </style>
+</head>
+
+<body>
+    <ul id="messages"></ul>
+    <form action="">
+        <input id="m" autocomplete="off" /><button>Send</button>
+    </form>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.1/socket.io.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+<script>
+    /*
+    //random chat
+    $(function () {
+        var socket = io();
+     //  var data = {messsage: "hello varnika",username:"abc"};
+
+        $('form').submit(function (e) {
+            e.preventDefault(); // prevents page reloading
+            socket.emit('sender',$('#m').data={messsage:'varnika',username:'abc'});//$('#m').val());
+            //$('#m').val('');
+          //  $('#m').data('');
+            return false;
+        });
+        //var obj =JSON.parse(data);
+        socket.on('chat message', function (msg) {
+           // var obj=JSON.stringify(msg);
+            $('#messages').append($('<li>').text(msg));
+        });
+
+        socket.on('system', function(id) {
+          //  var msg = nickName + (type == 'login' ? ' joined' : ' left');
+            $('#messages').append($('<li>').text(id,'user left'));
+        });
+
+        socket.on('waiting',function(data){
+            $('#messages').append($('<li>').text('waiting for new user'));
+        });
+
+        socket.on('connected',function(data){
+            $('#messages').append($('<li>').text('connected with user'));
+        });
+
+        socket.on('logout',function(){
+            $('#messages').append($('<li>').text('a user disconnecting and leaving this room'));
+        });
+
+        socket.on('reConnecting',function(){
+            $('#message').append($('<li>').text('ReConnecting by user'));
+        })
+    });
+    */
+//personal chatting
+   /* $(function () {
+        var socket = io();
+        var id=socket.id;
+        $('form').submit(function (e) {
+            e.preventDefault(); // prevents page reloading
+            socket.emit('chatting',$('#m').val(),$('#m').sender='riya',$('#m').receiver='pooja')//$('#m').val());
+            $('#m').val('');
+         //   $('#m').sender('');
+          //  $('#m').receiver('');
+            return false;
+        });
+        socket.on('receiverPeer', function (message,id,receiver) {
+        
+            $('#messages').append($('<li>').text(message));
+        });
+
+        socket.on('sendPeer', function (message,id,receiver) {
+        
+        $('#messages').append($('<li>').text(message));
+    });
+
+       
+    });*/
+    $(function () {
+        var socket = io();
+        var id=socket.id;
+        $('form').submit(function (e) {
+            e.preventDefault(); // prevents page reloading
+            socket.emit('sender',$('#m').data={messsage:'varnika',username:'abc'});
+            $('#m').val('');
+        
+            return false;
+        });
+        socket.on('chat message', function (msg) {
+            $('#messages').append($('<li>').text(msg));
+        });
+       
+    });
+</script>
+
+
+</html>
