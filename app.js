@@ -76,13 +76,8 @@ io.on('connection', function (socket) {
     socket.on('sender', function (msg) {
         // emit to that sockets room, now we use that current_room
         console.log(msg);
-        //  let aa=JSON.stringify(msg);
-        //   var localUser = JSON.parse(JSON.stringify(msg));
-        var localUser = JSON.stringify(msg);
-        // var localUser =JSON.parse(aa);
-        console.log("msg", localUser.msg);
-        console.log(localUser.message)
-        io.in(socket.current_room).emit('chat message', localUser.msg);
+       
+        io.in(socket.current_room).emit('chat message',msg);
 
     });
 

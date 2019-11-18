@@ -60,22 +60,20 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.1/socket.io.js"></script>
 <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 <script>
-    /*
+
     //random chat
+    /*
     $(function () {
         var socket = io();
      //  var data = {messsage: "hello varnika",username:"abc"};
 
         $('form').submit(function (e) {
             e.preventDefault(); // prevents page reloading
-            socket.emit('sender',$('#m').data={messsage:'varnika',username:'abc'});//$('#m').val());
-            //$('#m').val('');
-          //  $('#m').data('');
+            socket.emit('sender',$('#m').val());
+            $('#m').val('');
             return false;
         });
-        //var obj =JSON.parse(data);
         socket.on('chat message', function (msg) {
-           // var obj=JSON.stringify(msg);
             $('#messages').append($('<li>').text(msg));
         });
 
@@ -101,46 +99,143 @@
         })
     });
     */
-//personal chatting
-   /* $(function () {
+    //personal chatting(sushant)
+    $(function () {
         var socket = io();
-        var id=socket.id;
+        
+      // var room="abc";
         $('form').submit(function (e) {
             e.preventDefault(); // prevents page reloading
-            socket.emit('chatting',$('#m').val(),$('#m').sender='riya',$('#m').receiver='pooja')//$('#m').val());
+            socket.emit('user name',$('#m').val());
+           // socket.emit('sender',$('#m').val(),$('#m').sender = "reema",$('#m').receiver = "rinky",$('#m').room="abc");//$('#m').val());
+            
             $('#m').val('');
-         //   $('#m').sender('');
-          //  $('#m').receiver('');
+            //   $('#m').sender('');
+            //  $('#m').receiver('');
             return false;
         });
-        socket.on('receiverPeer', function (message,id,receiver) {
-        
+
+        socket.on('updateroomusers',function(data){
+            $('#messages').append($('<li>').text('connected with user'));
+        });
+
+
+        socket.on('receiverPeer', function (message) {
+
             $('#messages').append($('<li>').text(message));
         });
 
-        socket.on('sendPeer', function (message,id,receiver) {
-        
-        $('#messages').append($('<li>').text(message));
-    });
+        socket.on('sendPeer', function (message, id, receiver) {
 
-       
-    });*/
-    $(function () {
-        var socket = io();
-        var id=socket.id;
-        $('form').submit(function (e) {
-            e.preventDefault(); // prevents page reloading
-            socket.emit('sender',$('#m').data={messsage:'varnika',username:'abc'});
-            $('#m').val('');
-        
-            return false;
+            $('#messages').append($('<li>').text(message));
         });
-        socket.on('chat message', function (msg) {
-            $('#messages').append($('<li>').text(msg));
-        });
-       
+
+
     });
+     //parsing code
+    /*
+   $(function () {
+       var socket = io();
+       var id = socket.id;
+       $('form').submit(function (e) {
+           e.preventDefault(); // prevents page reloading
+           socket.emit('sender',JSON.stringify({"message":$('#m').val(),"sender": "abc","receiver":"def"}));
+           $('#m').val('');
+
+           return false;
+       });
+       socket.on('chat message', function (msg) {
+           console.log(msg);
+           console.log(msg.message);
+           $('#messages').append($('<li>').text(msg.username+":"+msg.message));
+       });
+
+   });*/
 </script>
 
 
 </html>
+
+
+
+
+
+<!--html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<title>Document</title>
+
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+<script src="/socket.io/socket.io.js"></script>
+
+</head>
+
+<body>
+
+<div id="box">
+
+</div>
+
+<form id="register">
+
+<input type="text" id="name">
+
+<input type="submit" value="Submit">
+
+</form>
+
+<form id="chat">
+
+<input type="text" id="to">
+
+<input type="text" id="message">
+
+<input type="submit">
+
+</form>
+
+<script>
+jQuery(function($){
+    var socket=io.connect();
+    var $chat=$("#chat");
+    var $box=$("#box");
+    var $register=$("#register");
+    $register.submit(function(e){
+        e.preventDefault();
+        socket.emit('new',{name:$("#name").val()},function(data){
+            if(data){
+                console.log("accepted");
+                alert(data);
+            }
+            else{
+                console.log("Failed");
+                alert(data);
+            }
+        })
+    })
+
+    $chat.submit(function(e){
+        e.preventDefault();
+        socket.emit('msg',{to:$("#to").val(),msg:$("#message").val()},function(data){
+            $box.append(data);
+        })
+    })
+
+    socket.on('priv',function(data){
+        $("#box").append(data);
+    })
+})
+
+</script>
+
+</body>
+
+</html-->
