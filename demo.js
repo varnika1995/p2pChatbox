@@ -7,40 +7,30 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
 })
 
-//const history = []
-//const client = []
 var people = {};
 io.on('connection', function (socket) {
     console.log('user connection with socketid=', socket.id);
 
-  /*  client.push({ id: socket.client.id })
-    console.log(client)
-
-    var getClientID = client.find(e => (e.id === socket.client.id))
-    console.log("the Client", getClientID)
-    if (getClientID) {
-        //io.sockets.emit("msg",history);
-        socket.emit("msg", history);
-
-    }*/
-
     socket.on('user name', function (data) {
         console.log('users', data);
-
+        socket.username=data;
         people[data] = socket.id;
         console.log('peoples', people[data]);
 
         io.emit('onlineUsers', people[data]);
     });
 
-    socket.on('sender', function (sender, reciever, msg) {
-        console.log(sender);
-        console.log(reciever);
-        console.log(msg)
-        history.push(data)
-        console.log(history)
-        io.in(people[reciever]).emit('receiverPeer', msg);
-        io.emit('sendPeer', msg);
+    
+    socket.on('sender', function (data) {
+     //   let room=sender+""+reciever;
+        console.log(data.room);
+        socket.join(data.room);
+        console.log(data.sender);
+        console.log(data.reciever);
+        console.log(data.msg)
+      //  io.in(people[reciever]).emit('receiverPeer', msg);
+       // io.in(people[sender]).emit('sendPeer', msg);
+       io.in(data.room).emit('sendPeer',data.msg);
     })
 })
 

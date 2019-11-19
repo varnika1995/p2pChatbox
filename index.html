@@ -100,18 +100,15 @@
     });
     */
     //personal chatting(sushant)
-    $(function () {
+/*    $(function () {
         var socket = io();
         
       // var room="abc";
         $('form').submit(function (e) {
             e.preventDefault(); // prevents page reloading
-            socket.emit('user name',$('#m').val());
-           // socket.emit('sender',$('#m').val(),$('#m').sender = "reema",$('#m').receiver = "rinky",$('#m').room="abc");//$('#m').val());
-            
+            socket.emit('sender',JSON.stringify({"message":$('#m').val(),"sender": "abc","receiver":"def"}));
             $('#m').val('');
-            //   $('#m').sender('');
-            //  $('#m').receiver('');
+            
             return false;
         });
 
@@ -131,26 +128,27 @@
         });
 
 
-    });
+    });*/
      //parsing code
-    /*
+    
    $(function () {
        var socket = io();
        var id = socket.id;
        $('form').submit(function (e) {
            e.preventDefault(); // prevents page reloading
-           socket.emit('sender',JSON.stringify({"message":$('#m').val(),"sender": "abc","receiver":"def"}));
+           socket.emit('sender',$('#m').val());
+           //JSON.stringify({"message":$('#m').val(),"sender": "abc","receiver":"def"}));
            $('#m').val('');
 
            return false;
        });
        socket.on('chat message', function (msg) {
            console.log(msg);
-           console.log(msg.message);
-           $('#messages').append($('<li>').text(msg.username+":"+msg.message));
+           //console.log(msg.message);
+           $('#messages').append($('<li>').text(msg));//msg.username+":"+msg.message));
        });
 
-   });*/
+   });
 </script>
 
 
